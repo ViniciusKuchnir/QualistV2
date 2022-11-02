@@ -13,13 +13,13 @@ module.exports = {
         type: "CHAR(1)",
         allowNull: false,
       },
-      idModel: {
+      idPattern: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'Models',
+            model: 'Patterns',
             key: 'id',
-            as: 'IDMODEL'
+            as: 'IDPATTERN'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'

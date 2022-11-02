@@ -24,13 +24,13 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idModel: {
+      idPattern: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
-          model: 'Models',
+          model: 'Patterns',
           key: 'id',
-          as: 'IDMODEL'
+          as: 'IDPATTERN'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
