@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const Layout = ({back, children, navigation}) => {
+const Layout = ({children, navigation}) => {
   return (
     <View style={styles.container}>
         <StatusBar style='dark' />
