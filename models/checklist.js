@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id',
         as: 'IDCOMPANY'
       });
-      Checklist.belongsTo(models.Model,{
+      Checklist.belongsTo(models.Pattern,{
         foreignKey: 'id',
-        as: 'IDMODEL'
+        as: 'IDPATTERN'
       });
     }
   }

@@ -10,10 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Level.belongsTo(models.Model, {
+      Level.belongsTo(models.Pattern, {
         foreignKey: 'id',
-        as: 'IDMODEL'
-      });   
+        as: 'IDPATTERN'
+      }); 
+      Level.belongsToMany(models.Item,{
+        foreignKey: 'id',
+        as: 'IDITEM',
+        through: models.ItemLevel
+      })
+        
     }
   }
   Level.init({
