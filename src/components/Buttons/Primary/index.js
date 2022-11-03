@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#299740",
     borderRadius: 8,
+    marginBottom: 16
   },
   text: {
     fontSize: 16,
