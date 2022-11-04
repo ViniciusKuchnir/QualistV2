@@ -55,6 +55,11 @@ app.get('/user/:email/:password', async (req, res) => {
   }
 });
 
+app.get('/getChecklists/:idUser', async (req, res) => {
+  let {idUser} = req.params;
+  console.log(idUser);
+});
+
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
   console.log("Servidor rodando...");
