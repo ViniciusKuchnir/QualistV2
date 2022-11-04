@@ -37,9 +37,8 @@ app.post("/createUser", async (req, res) => {
 
 app.get('/user/:email/:password', async (req, res) => {
   let {email, password} = req.params;
-  console.log(email, password);
   let user = await Company.findOne({
-    attributes: ['id'],
+    attributes: ['id', 'nome', 'email'],
     where: {
       [Op.and]:[
         {
@@ -52,7 +51,7 @@ app.get('/user/:email/:password', async (req, res) => {
   if (user === null) {
     res.status(404).send('Usuário não encontrado')
   }else{
-    res.status(200).send('Usuário encontrado');
+    res.status(200).send({user: user});
   }
 });
 

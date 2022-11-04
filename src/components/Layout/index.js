@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 
@@ -11,9 +11,14 @@ const Layout = ({children, navigation}) => {
         <StatusBar style='dark' />
         <Toast/>
         {navigation ? 
-        <TouchableOpacity style={styles.iconBack} activeOpacity={0.8} onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={28} color="#198754" />
-        </TouchableOpacity> 
+        <View style={styles.head}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <MaterialIcons name="menu" size={28} color="#299740" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <MaterialCommunityIcons name="bell" size={28} color="#299740" />
+          </TouchableOpacity>
+        </View>
         : 
         null
         }
@@ -32,11 +37,11 @@ const styles = StyleSheet.create({
         paddingTop: 64,
         backgroundColor : '#FFF'
     },
-    iconBack:{
+    head:{
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 16
+      marginBottom: 20
     }
 })

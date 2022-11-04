@@ -6,6 +6,7 @@ import TextField from '../../components/Inputs/TextField';
 import PrimaryButton from "../../components/Buttons/Primary";
 import TertiaryButton from "../../components/Buttons/Tertiary";
 import Toast from "react-native-toast-message";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useForm, Controller } from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -21,13 +22,28 @@ const Login = ({navigation}) => {
     resolver: yupResolver(schema)
   });
 
+  //Assyn Storage
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('user', jsonValue);
+    } catch (e) {
+      Toast.show({
+        type: "error",
+        text1: "Erro inesperado!",
+        text2: "Algo de errado aconteceu! Por favor, tente novamente!",
+      });
+    }
+  }
+
   function loginUser(data) {
     Keyboard.dismiss();
     api
     .get(`/user/${data.email}/${data.password}`)
     .then(response => {
       if(response.status === 200){
-        navigation.navigate('Home')
+        storeData(response.data.user);
+        navigation.navigate('Main')
       }else{
         Toast.show({
           type: "error",
