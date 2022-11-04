@@ -5,14 +5,12 @@ import Layout from "../../components/Layout";
 import TextField from "../../components/Inputs/TextField";
 import PrimaryButton from "../../components/Buttons/Primary";
 import TertiaryButton from "../../components/Buttons/Tertiary";
-import Message from '../../components/Messages/Error';
 import Toast from 'react-native-toast-message';
 
 const Register = ({navigation}) => {
   const [company, setCompany] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [message, setMessage] = useState(null);
 
   function registerUser(){
     Keyboard.dismiss();
