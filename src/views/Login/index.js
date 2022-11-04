@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Keyboard } from 'react-native'
 import api from "../../services/api";
 import Layout from '../../components/Layout';
 import TextField from '../../components/Inputs/TextField';
@@ -22,7 +22,28 @@ const Login = ({navigation}) => {
   });
 
   function loginUser(data) {
-    console.log(data)
+    Keyboard.dismiss();
+    api
+    .get(`/user/${data.email}/${data.password}`)
+    .then(response => {
+      if(response.status === 200){
+        navigation.navigate('Home')
+      }else{
+        Toast.show({
+          type: "error",
+          text1: "Tente novamente!",
+          text2: "Algo de errado aconteceu! Por favor, tente novamente!",
+        });
+      }
+    })
+    .catch(err => {
+      Toast.show({
+        type: "error",
+        text1: "Usuário não encontrado!",
+        text2: `Não conseguimos encontrar este usuário.`,
+      });
+    });
+
   }
 
   return (

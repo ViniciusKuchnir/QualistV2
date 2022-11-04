@@ -11,6 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const { Op } = require("sequelize");
 
+
+//Usuário
+
 app.post("/createUser", async (req, res) => {
   let { company, email, password } = req.body.params;
   let searchUser = await Company.findOne({
@@ -30,7 +33,27 @@ app.post("/createUser", async (req, res) => {
   }else{
     res.status(422).send('Esta conta de email já existe');
   }
-  
+});
+
+app.get('/user/:email/:password', async (req, res) => {
+  let {email, password} = req.params;
+  console.log(email, password);
+  let user = await Company.findOne({
+    attributes: ['id'],
+    where: {
+      [Op.and]:[
+        {
+          email: email,
+          senha: password
+        }
+      ]
+    },
+  });
+  if (user === null) {
+    res.status(404).send('Usuário não encontrado')
+  }else{
+    res.status(200).send('Usuário encontrado');
+  }
 });
 
 let port = process.env.PORT || 3000;

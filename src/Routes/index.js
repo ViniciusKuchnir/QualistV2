@@ -19,6 +19,11 @@ const Route = () => {
           component={Login}
           options={{headerShown: false}}
         />
+        <Stack.Screen 
+          name='Home'
+          component={Home}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
