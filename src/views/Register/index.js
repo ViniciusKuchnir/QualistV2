@@ -1,53 +1,57 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Keyboard } from "react-native";
-import api from '../../services/api';
+import api from "../../services/api";
 import Layout from "../../components/Layout";
 import TextField from "../../components/Inputs/TextField";
 import PrimaryButton from "../../components/Buttons/Primary";
 import TertiaryButton from "../../components/Buttons/Tertiary";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
+import { useForm, Controller } from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-const Register = ({navigation}) => {
-  const [company, setCompany] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+const schema = yup.object({
+  company: yup.string().required('Informe o nome da empresa'),
+  email: yup.string().email('Digite um email válido').required('Informe um email'),
+  password: yup.string().min(8, 'A senha deve conter pelo menos 8 caracteres').max(16,'A senha deve conter no máximo 16 caracteres').required('Informe uma senha')
+})
 
-  function registerUser(){
+
+const Register = ({ navigation }) => {
+  const {control, handleSubmit, formState: { errors }} = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  function registerUser(data) {
     Keyboard.dismiss();
-    api.post('/createUser', {
-      params:{
-        company: company,
-        email: email,
-        password: password
+    api
+    .post("/createUser", {
+      params: {
+        company: data.company,
+        email: data.email,
+        password: data.password,
+      },
+    })
+    .then(async (response) => {
+      if (response.status === 200) {
+        navigation.navigate("Login");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Tente novamente!",
+          text2: "Algo de errado aconteceu! Por favor, tente novamente!",
+        });
       }
     })
-    .then(response => {
-      if (response.status === 200) {
-        //Realiza o navigation
-        Toast.show({
-          type: 'success',
-          text1: 'Cadastro realizado com sucesso!',
-          text2: 'Redirecionando para o login'
-        });
-      }else{
-        setMessage('Algo de errado aconteceu! Tente novamente.');
-        Toast.show({
-          type: 'error',
-          text1: 'Tente novamente!',
-          text2: 'Algo de errado aconteceu! Por favor, tente novamente!'
-        });
-      } 
-    })
-    .catch(err => {
-      setMessage('Este usuário já existe!');
+    .catch((err) => {
       Toast.show({
-        type: 'error',
-        text1: 'Usuário já existente!',
-        text2: 'Este endereço de email já se encontra cadastrado!'
+        type: "error",
+        text1: "Usuário já existente!",
+        text2: "Este endereço de email já se encontra cadastrado!",
       });
     });
+    
   }
-
 
   return (
     <Layout>
@@ -59,26 +63,56 @@ const Register = ({navigation}) => {
           </Text>
         </View>
         <View>
-          <TextField
-            label="Nome da empresa"
-            placeholder="Ex.: Qualist"
-            value={company}
-            setValue={setCompany}
+          <Controller
+            control={control}
+            name="company"
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                label="Nome da empresa"
+                placeholder="Ex.: Qualist"
+                value={value}
+                setValue={onChange}
+                error={errors.company && errors.company?.message}
+              />
+            )}
           />
-          <TextField
-            label="Email"
-            placeholder="Ex.: qualist@gmail.com"
-            value={email}
-            setValue={setEmail}
+
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                label="Email"
+                placeholder="Ex.: qualist@gmail.com"
+                keyboardType='email-address'
+                autoCapitalize='none'
+                value={value}
+                setValue={onChange}
+                error={errors.email && errors.email?.message}
+              />
+            )}
           />
-          <TextField
-            label="Senha"
-            placeholder="Digite uma senha"
-            value={password}
-            setValue={setPassword}
-            secureTextEntry={true}
+
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                label="Senha"
+                placeholder="Digite uma senha"
+                value={value}
+                setValue={onChange}
+                secureTextEntry={true}
+                error={errors.password && errors.password?.message}
+              />
+            )}
           />
-          <PrimaryButton onPress={registerUser}>Fazer cadastro</PrimaryButton>
+
+          {/*
+           */}
+          <PrimaryButton onPress={handleSubmit(registerUser)}>
+            Fazer cadastro
+          </PrimaryButton>
         </View>
 
         <TertiaryButton
