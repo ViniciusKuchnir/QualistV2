@@ -2,11 +2,14 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
+
 
 const Layout = ({children, navigation}) => {
   return (
     <View style={styles.container}>
         <StatusBar style='dark' />
+        <Toast/>
         {navigation ? 
         <TouchableOpacity style={styles.iconBack} activeOpacity={0.8} onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={28} color="#198754" />
