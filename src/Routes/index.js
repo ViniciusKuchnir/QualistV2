@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Register, Home, Checklists, Responsibles, Items } from "../views";
+import { Login, Register, Home, Checklists, Responsibles, Items, Justification } from "../views";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawer from "../components/CustomDrawer";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -57,6 +57,14 @@ function Menu() {
       <Drawer.Screen
         name="Items"
         component={Items}
+        options={{ 
+          headerShown: false,
+          drawerItemStyle: {height: 0}
+        }}
+      />
+      <Drawer.Screen
+        name="Justification"
+        component={Justification}
         options={{ 
           headerShown: false,
           drawerItemStyle: {height: 0}

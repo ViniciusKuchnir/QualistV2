@@ -102,6 +102,21 @@ app.get('/Unconformities/:idChecklist', async (req, res) =>{
   }else{
     res.status(200).send({count: count, items: rows})
   }
+});
+
+app.put('/setItem', async (req, res) => {
+  let {idItem, confirmation} = req.body;
+  let change = await Item.update({confirmado: confirmation},{
+    where:{
+      id: idItem
+    }
+  });
+  if(change[0] >= 1){
+    res.status(200).send("Item alterado")
+  }else{
+    res.status(404).send('Nenhum item alterado')
+  }
+  
 })
 
 let port = process.env.PORT || 3000;

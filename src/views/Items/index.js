@@ -5,7 +5,6 @@ import Layout from "../../components/Layout";
 import Title from "../../components/Title";
 import Checkbox from "../../components/Inputs/Checkbox";
 import CardData from "../../components/CardData";
-import * as Progress from "react-native-progress";
 
 const Items = ({ route, navigation }) => {
   const { idChecklist } = route.params;
@@ -65,7 +64,7 @@ const Items = ({ route, navigation }) => {
           <FlatList
             data={items}
             renderItem={({ item, index }) => (
-              <Checkbox idItem={item.id} initValue={item.confirmado}>
+              <Checkbox idItem={item.id} initValue={item.confirmado} navigation={navigation}>
                 {item.descricao}
               </Checkbox>
             )}

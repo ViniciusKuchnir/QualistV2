@@ -4,6 +4,7 @@ import Home from './Home';
 import Checklists from './Checklists';
 import Responsibles from './Responsibles';
 import Items from './Items';
+import Justification from './Justification';
 
 export {
     Login,
@@ -11,5 +12,6 @@ export {
     Home,
     Checklists,
     Responsibles,
-    Items
+    Items,
+    Justification
 }

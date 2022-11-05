@@ -1,13 +1,24 @@
 import React, { useState, useEffect, memo } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import api from '../../../services/api';
+import Toast from "react-native-toast-message";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const Checkbox = ({idItem, children, initValue }) => {
+const Checkbox = ({idItem, children, initValue, navigation }) => {
   const [value, setValue] = useState(initValue);
 
-  function handleCheck() {
-    setValue(!value);
+  async function handleCheck() {
+    if(value){
+      navigation.navigate('Justification', {
+        idItem: idItem
+      });
+    }else{
+      setValue(!value);
+      api.put('/setItem', {
+        idItem: idItem,
+        confirmation: value
+      });
+    }
   }
 
   return (
