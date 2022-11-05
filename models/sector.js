@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       Sector.hasMany(models.Responsible,{
         as: 'IDRESPONSIBLE'
       });
-      Sector.belongsTo(models.Company,{
-        foreignKey: 'id',
-        as: 'IDCOMPANY'
-      })
     }
   }
   Sector.init({

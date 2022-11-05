@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id',
         as: 'IDSECTOR'
       });
+      Responsible.belongsTo(models.Company,{
+        foreignKey: 'id',
+        as: 'IDCOMPANY'
+      })
     }
   }
   Responsible.init({
