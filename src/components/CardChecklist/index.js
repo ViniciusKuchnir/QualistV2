@@ -1,13 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 
 const CardChecklist = ({title}) => {
   return (
-    <View style={styles.content}>
+    <TouchableOpacity style={styles.content} activeOpacity={0.9}>
         <Text style={styles.title}>{title}</Text>
         <MaterialIcons name="arrow-forward-ios" size={24} color='#FFF' />
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         letterSpacing: 1,
-        color: '#FFF'
+        color: '#FFF',
+        width: "90%",
     },
 })

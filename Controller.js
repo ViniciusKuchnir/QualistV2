@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const models = require("./models");
 let Company = models.sequelize.models.Company;
+let Checklist = models.sequelize.models.Checklist;
 
 const app = express();
 app.use(cors());
@@ -57,7 +58,17 @@ app.get('/user/:email/:password', async (req, res) => {
 
 app.get('/getChecklists/:idUser', async (req, res) => {
   let {idUser} = req.params;
-  console.log(idUser);
+  let checklists = await Checklist.findAll({
+    attributes: ['id','nome'],
+    where:{
+      idCompany: idUser
+    }
+  });
+  if (checklists === null){
+    res.status(404).send('Nenhum checklist encontrado');
+  }else{
+    res.status(200).send({checklists: checklists});
+  }
 });
 
 let port = process.env.PORT || 3000;

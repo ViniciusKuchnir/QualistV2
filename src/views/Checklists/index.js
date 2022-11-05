@@ -7,13 +7,13 @@ import Title from "../../components/Title";
 import CardChecklist from "../../components/CardChecklist";
 
 const Checklists = ({ navigation }) => {
-  const [checklists, setCheclists] = useState([]);
+  const [checklists, setChecklists] = useState([]);
 
   function getChecklists(idUser) {
     console.log(idUser);
     api.get(`/getChecklists/${idUser}`)
     .then(response =>{
-        
+        setChecklists(response.data.checklists);
     })
     .catch(err => console.log(err));
   }
@@ -40,13 +40,13 @@ const Checklists = ({ navigation }) => {
         title="Checklists"
         subtitle="Veja a lista de todos os seus checklists"
       />
-      {/* <FlatList
-        data={data}
+      <FlatList
+        data={checklists}
         renderItem={({ item, index }) => (
-          <CardChecklist key={index} title={item} />
+          <CardChecklist key={item.id} title={item.nome} />
         )}
         keyExtractor={(item) => item.id}
-      /> */}
+      /> 
     </Layout>
   );
 };
