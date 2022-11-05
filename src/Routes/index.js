@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Register, Home, Checklists, Responsibles } from "../views";
+import { Login, Register, Home, Checklists, Responsibles, Items } from "../views";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawer from "../components/CustomDrawer";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -23,6 +23,7 @@ function Menu() {
         drawerActiveTintColor: '#FFF'
       }}
     >
+      
       <Drawer.Screen
         name="Home"
         component={Home}
@@ -51,6 +52,14 @@ function Menu() {
           drawerIcon: ({color}) => (
             <MaterialIcons name="people-alt" size={24} color={color} />
           ),
+        }}
+      />
+      <Drawer.Screen
+        name="Items"
+        component={Items}
+        options={{ 
+          headerShown: false,
+          drawerItemStyle: {height: 0}
         }}
       />
     </Drawer.Navigator>

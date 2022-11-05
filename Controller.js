@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const models = require("./models");
 let Company = models.sequelize.models.Company;
 let Checklist = models.sequelize.models.Checklist;
+let Item = models.sequelize.models.Item;
 
 const app = express();
 app.use(cors());
@@ -70,6 +71,38 @@ app.get('/getChecklists/:idUser', async (req, res) => {
     res.status(200).send({checklists: checklists});
   }
 });
+
+app.get('/items/:idChecklist', async (req, res) => {
+  let {idChecklist} = req.params;
+  const {count, rows} = await Item.findAndCountAll({
+    attributes: ['id', 'confirmado', 'descricao'],
+    where: {
+      idChecklist: idChecklist
+    }
+  });
+  if (rows === null) {
+    res.status(404).send('Nenhum item encontrado');
+  }else{
+    res.status(200).send({count: count, items: rows})
+  }
+})
+
+app.get('/Unconformities/:idChecklist', async (req, res) =>{
+  let {idChecklist} = req.params;
+  const {count, rows} = await Item.findAndCountAll({
+    attributes: ['id', 'confirmado', 'descricao'],
+      where: {
+        [Op.and]: [
+          { idChecklist: idChecklist }, 
+          { confirmado: false }],
+    }
+  });
+  if (rows === null) {
+    res.status(404).send('Nenhum usuário encontrado');
+  }else{
+    res.status(200).send({count: count, items: rows})
+  }
+})
 
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {

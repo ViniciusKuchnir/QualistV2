@@ -1,14 +1,13 @@
 import React, { useState, useEffect, memo } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import api from '../../../services/Api';
+import api from '../../../services/api';
 import { MaterialIcons } from "@expo/vector-icons";
 
-const Checkbox = ({idCheckbox, children, initValue }) => {
+const Checkbox = ({idItem, children, initValue }) => {
   const [value, setValue] = useState(initValue);
 
   function handleCheck() {
     setValue(!value);
-    api.put("/changeItem", {confirmado: !value,id: idCheckbox});
   }
 
   return (

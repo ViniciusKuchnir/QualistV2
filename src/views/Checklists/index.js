@@ -10,7 +10,6 @@ const Checklists = ({ navigation }) => {
   const [checklists, setChecklists] = useState([]);
 
   function getChecklists(idUser) {
-    console.log(idUser);
     api.get(`/getChecklists/${idUser}`)
     .then(response =>{
         setChecklists(response.data.checklists);
@@ -43,7 +42,7 @@ const Checklists = ({ navigation }) => {
       <FlatList
         data={checklists}
         renderItem={({ item, index }) => (
-          <CardChecklist key={item.id} title={item.nome} />
+          <CardChecklist key={item.id} idChecklist={item.id} title={item.nome} navigation={navigation} />
         )}
         keyExtractor={(item) => item.id}
       /> 

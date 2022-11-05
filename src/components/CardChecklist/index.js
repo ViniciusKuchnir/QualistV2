@@ -2,9 +2,11 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 
-const CardChecklist = ({title}) => {
+const CardChecklist = ({idChecklist, title, navigation}) => {
   return (
-    <TouchableOpacity style={styles.content} activeOpacity={0.9}>
+    <TouchableOpacity style={styles.content} activeOpacity={0.9} onPress={() => navigation.navigate('Items',{
+      idChecklist: idChecklist
+    })} >
         <Text style={styles.title}>{title}</Text>
         <MaterialIcons name="arrow-forward-ios" size={24} color='#FFF' />
     </TouchableOpacity>
