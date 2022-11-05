@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       Classification.hasMany(models.Item,{
         as: 'IDITEM'
       });
+      Classification.belongsTo(models.Company,{
+        foreignKey: 'id',
+        as: 'IDCOMPANY'
+      })
     }
   }
   Classification.init({

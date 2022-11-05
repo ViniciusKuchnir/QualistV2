@@ -21,6 +21,10 @@ module.exports = {
         type: "DATE",
         allowNull: true,
       },
+      justificativa: {
+        type: "VARCHAR(200)",
+        allowNull: true,
+      },
       idChecklist: {
         type: Sequelize.INTEGER,
         allowNull: false,

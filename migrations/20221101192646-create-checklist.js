@@ -24,17 +24,6 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idPattern: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-          model: 'Patterns',
-          key: 'id',
-          as: 'IDPATTERN'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

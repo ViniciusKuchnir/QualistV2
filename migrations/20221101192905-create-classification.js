@@ -17,6 +17,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      idCompany: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: 'Companies',
+          key: 'id',
+          as: 'IDCOMPANY'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

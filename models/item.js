@@ -22,11 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id',
         as: 'IDRESPONSIBLE'
       });
-      Item.belongsToMany(models.Level,{
-        foreignKey: 'id',
-        as: 'IDLEVEL',
-        through: models.ItemLevel
-      })
 
     }
   }

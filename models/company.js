@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       Company.hasMany(models.Checklist,{
         as: 'IDCHECKLIST'
       });
+      Company.hasMany(models.Sector,{
+        as: 'IDSECTOR'
+      });
+      Company.hasMany(models.Classification,{
+        as: 'IDCLASSIFICATION'
+      });
     }
   }
   Company.init({
