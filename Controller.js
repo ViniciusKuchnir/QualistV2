@@ -6,6 +6,8 @@ const models = require("./models");
 let Company = models.sequelize.models.Company;
 let Checklist = models.sequelize.models.Checklist;
 let Item = models.sequelize.models.Item;
+let Responsible = models.sequelize.models.Responsible;
+let Classification = models.sequelize.models.Classification;
 
 const app = express();
 app.use(cors());
@@ -117,6 +119,36 @@ app.put('/setItem', async (req, res) => {
     res.status(404).send('Nenhum item alterado')
   }
   
+});
+
+app.get('/responsibles/:idUser', async (req, res) => {
+  let idUser = req.params.idUser;
+  let responsibles = await Responsible.findAll({
+    attributes: ['id', 'nome'],
+    where:{
+      idCompany: idUser
+    }
+  });
+  if (responsibles === null){
+    res.status(404).send('Nenhum responsável encontrado');
+  }else{
+    res.status(200).send({responsibles: responsibles});
+  }
+})
+
+app.get('/classifications/:idUser', async (req, res) => {
+  let idUser = req.params.idUser;
+  let classifications = await Classification.findAll({
+    attributes: ['id', 'descricao', 'prazo'],
+    where:{
+      idCompany: idUser
+    }
+  });
+  if (classifications === null){
+    res.status(404).send('Nenhuma classificação encontrada');
+  }else{
+    res.status(200).send({classifications: classifications});
+  }
 })
 
 let port = process.env.PORT || 3000;
