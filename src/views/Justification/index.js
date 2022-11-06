@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Select from "../../components/Inputs/Select";
 import PrimaryButton from "../../components/Buttons/Primary";
+import SecondaryButton from "../../components/Buttons/Secondary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const schema = yup.object({
@@ -17,7 +18,7 @@ const schema = yup.object({
     .number()
     .transform((value) => (isNaN(value) ? 0 : value))
     .required("Selecione um responsável"),
-    classification: yup
+  classification: yup
     .number()
     .transform((value) => (isNaN(value) ? 0 : value))
     .required("Selecione uma classificação"),
@@ -78,6 +79,10 @@ const Justification = ({ route, navigation }) => {
     }
   };
 
+  function cancelSubmit(){
+    navigation.goBack();
+  }
+
   useEffect(() => {
     getResponsibles();
     getClassifications();
@@ -134,6 +139,7 @@ const Justification = ({ route, navigation }) => {
       <PrimaryButton onPress={handleSubmit(sendNotification)}>
         Enviar não conformidade
       </PrimaryButton>
+      <SecondaryButton onPress={() => cancelSubmit()}>Cancelar</SecondaryButton>
     </Layout>
   );
 };
