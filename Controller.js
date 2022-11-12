@@ -165,10 +165,11 @@ app.post("/sendEmail", async (req, res) => {
     },
   });
 
-  let nome = await Responsible.findByPk(responsible,{
-    attributes: ["nome"]
+  let {email, nome} = await Responsible.findByPk(responsible,{
+    attributes: ["email","nome"]
   }).then(((response)=>{
-    return response.dataValues.nome;
+    let {email, nome} = response.dataValues;
+    return {email, nome}
   })) 
 
   let {descricao, prazo} = await Classification.findByPk(classification,{
@@ -184,7 +185,7 @@ app.post("/sendEmail", async (req, res) => {
   transport
     .sendMail({
       from: "Qualist App <qualistapp@gmail.com>",
-      to: "qualistapp@gmail.com",
+      to: email,
       subject: "Solicitação de Resolução de Não Conformidade",
       html: `
         <h1>Solicitação de Resolução de Não Conformidade</h1>
