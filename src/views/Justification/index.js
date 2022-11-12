@@ -4,41 +4,48 @@ import api from "../../services/api";
 import Layout from "../../components/Layout";
 import Title from "../../components/Title";
 import TextField from "../../components/Inputs/TextField";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import Toast from "react-native-toast-message";
 import Select from "../../components/Inputs/Select";
 import PrimaryButton from "../../components/Buttons/Primary";
 import SecondaryButton from "../../components/Buttons/Secondary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const schema = yup.object({
-  justification: yup.string().required("Informe uma justificativa"),
-  responsible: yup
-    .number()
-    .transform((value) => (isNaN(value) ? 0 : value))
-    .required("Selecione um responsável"),
-  classification: yup
-    .number()
-    .transform((value) => (isNaN(value) ? 0 : value))
-    .required("Selecione uma classificação"),
-});
-
 const Justification = ({ route, navigation }) => {
   let { idItem } = route.params;
   const [responsibles, setResponsibles] = useState([]);
   const [classifications, setClassifications] = useState([]);
+  const [responsible, setResponsible] = useState(null);
+  const [errorResponsible, setErrorResponsible] = useState(null);
+  const [classification, setClassification] = useState(null);
+  const [errorClassification, setErrorClassification] = useState(null);
+  const [justification, setJustification] = useState('');
+  const [errorJustification, setErrorJustification] = useState(null);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  function sendNotification(data) {
-    console.log(data.responsible);
+  function sendNotification() {
+    if(responsible === null) {setErrorResponsible('Escolha uma opção')}
+    if (justification === '') {setErrorJustification('Informe uma justificativa')}
+    if (classification === null) {setErrorClassification('Escolha uma opção ')}
+    if (responsible === null || justification === '' || classification === null){
+      console.log('Um dos campos não está preenchido');
+    }else{
+      api.post('/sendEmail', {
+        params:{
+          responsible: responsible,
+          classification: classification,
+          justification: justification
+        }
+      })
+      .then(() => {
+        Toast.show({
+          type: "success",
+          text1: "Email enviado!",
+          text2: "Email enviado com sucesso!",
+        });
+      })
+      .catch(err => console.log('Erro no envio de email'))
+    }
+    //Enviar email
+    // Atualizar checkbox da lista
   }
 
   const getResponsibles = async () => {
@@ -79,7 +86,7 @@ const Justification = ({ route, navigation }) => {
     }
   };
 
-  function cancelSubmit(){
+  function cancelSubmit() {
     navigation.goBack();
   }
 
@@ -91,52 +98,36 @@ const Justification = ({ route, navigation }) => {
   return (
     <Layout navigation={navigation}>
       <Title title="Justificativa" subtitle="Justifique a não conformidade" />
-      <Controller
-        control={control}
-        name="responsible"
-        render={({ field: { onChange, value } }) => (
-          <Select
-            label="Responsável"
-            placeholder="Selecione um responsável"
-            items={responsibles}
-            setItems={setResponsibles}
-            value={value}
-            setValue={onChange}
-            error={errors.responsible && errors.responsible?.message}
-          />
-        )}
+
+      <Select
+        label="Responsável"
+        placeholder="Selecione um responsável"
+        items={responsibles}
+        setItems={setResponsibles}
+        value={responsible}
+        setValue={setResponsible}
+        error={responsible === null ? errorResponsible : null}  
       />
 
-      <Controller
-        control={control}
-        name="classification"
-        render={({ field: { onChange, value } }) => (
-          <Select
-            label="Classificação"
-            placeholder="Selecione uma classificação"
-            items={classifications}
-            setItems={setClassifications}
-            value={value}
-            setValue={onChange}
-            error={errors.classification && errors.classification?.message}
-          />
-        )}
+      <Select
+        label="Classificação"
+        placeholder="Selecione uma classificação"
+        items={classifications}
+        setItems={setClassifications}
+        value={classification}
+        setValue={setClassification} 
+        error={classification === null ? errorClassification : null}
       />
 
-      <Controller
-        control={control}
-        name="justification"
-        render={({ field: { onChange, value } }) => (
-          <TextField
-            label="Justificativa"
-            placeholder="Ex.: O documento não possui título"
-            value={value}
-            setValue={onChange}
-            error={errors.justification && errors.justification?.message}
-          />
-        )}
+      <TextField
+        label="Justificativa"
+        placeholder="Ex.: O documento não possui título"
+        value={justification}
+        setValue={setJustification}
+        error={justification === '' ? errorJustification : null}
       />
-      <PrimaryButton onPress={handleSubmit(sendNotification)}>
+
+      <PrimaryButton onPress={sendNotification}>
         Enviar não conformidade
       </PrimaryButton>
       <SecondaryButton onPress={() => cancelSubmit()}>Cancelar</SecondaryButton>
