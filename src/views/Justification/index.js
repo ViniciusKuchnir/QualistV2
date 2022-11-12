@@ -11,7 +11,7 @@ import SecondaryButton from "../../components/Buttons/Secondary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Justification = ({ route, navigation }) => {
-  let { idItem } = route.params;
+  let { idItem, confirmation } = route.params;
   const [responsibles, setResponsibles] = useState([]);
   const [classifications, setClassifications] = useState([]);
   const [responsible, setResponsible] = useState(null);
@@ -42,10 +42,18 @@ const Justification = ({ route, navigation }) => {
           text2: "Email enviado com sucesso!",
         });
       })
-      .catch(err => console.log('Erro no envio de email'))
+      .catch(err => {
+        Toast.show({
+          type: "error",
+          text1: "Erro ao enviar email!",
+          text2: "Ocorreu um erro ao enviar o email!",
+        });
+      })
     }
-    //Enviar email
-    // Atualizar checkbox da lista
+    api.put('/setItem', {
+      idItem: idItem,
+      confirmation: confirmation,
+    })
   }
 
   const getResponsibles = async () => {

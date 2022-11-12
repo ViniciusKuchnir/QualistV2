@@ -10,7 +10,8 @@ const Checkbox = ({idItem, children, initValue, navigation }) => {
   async function handleCheck() {
     if(value){
       navigation.navigate('Justification', {
-        idItem: idItem
+        idItem: idItem,
+        confirmation: value
       });
     }else{
       setValue(!value);

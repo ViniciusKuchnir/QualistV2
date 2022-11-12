@@ -107,7 +107,7 @@ app.get("/Unconformities/:idChecklist", async (req, res) => {
 app.put("/setItem", async (req, res) => {
   let { idItem, confirmation } = req.body;
   let change = await Item.update(
-    { confirmado: confirmation },
+    { confirmado: !confirmation },
     {
       where: {
         id: idItem,
