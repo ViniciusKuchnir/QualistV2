@@ -5,6 +5,7 @@ import Checklists from './Checklists';
 import Responsibles from './Responsibles';
 import Items from './Items';
 import Justification from './Justification';
+import Unconformities from './Unconformities';
 
 export {
     Login,
@@ -13,5 +14,6 @@ export {
     Checklists,
     Responsibles,
     Items,
-    Justification
+    Justification,
+    Unconformities
 }

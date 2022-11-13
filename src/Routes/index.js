@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Register, Home, Checklists, Responsibles, Items, Justification } from "../views";
+import { Login, Register, Home, Checklists, Responsibles, Items, Justification, Unconformities } from "../views";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawer from "../components/CustomDrawer";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -51,6 +51,16 @@ function Menu() {
           headerShown: false,
           drawerIcon: ({color}) => (
             <MaterialIcons name="people-alt" size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Unconformities"
+        component={Unconformities}
+        options={{ 
+          headerShown: false,
+          drawerIcon: ({color}) => (
+            <MaterialIcons name="error" size={24} color={color} />
           ),
         }}
       />
