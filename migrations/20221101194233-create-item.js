@@ -25,7 +25,7 @@ module.exports = {
         type: "VARCHAR(200)",
         allowNull: true,
       },
-      idChecklist: {
+      ChecklistId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -36,7 +36,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idClassification: {
+      ClassificationId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -47,7 +47,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idResponsible: {
+      ResponsibleId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{

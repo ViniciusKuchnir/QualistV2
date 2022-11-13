@@ -17,7 +17,7 @@ module.exports = {
         type: "VARCHAR(30)",
         allowNull: false,
       },
-      idSector: {
+      SectorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -28,7 +28,7 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idCompany: {
+      CompanyId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{

@@ -13,7 +13,7 @@ module.exports = {
         type: "VARCHAR(50)",
         allowNull: false,
       },
-      idCompany: {
+      CompanyId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{

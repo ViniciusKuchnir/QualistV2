@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      idCompany: {
+      CompanyId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
