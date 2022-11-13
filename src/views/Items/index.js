@@ -11,6 +11,7 @@ const Items = ({ route, navigation }) => {
   const [items, setItems] = useState([]);
   const [totalItems, setTotalItems] = useState(null);
   const [unconformities, setUnconformities] = useState(null);
+  const [load, setLoad] = useState(false);
 
   function getItems(idChecklist) {
     api
@@ -41,9 +42,11 @@ const Items = ({ route, navigation }) => {
   }
 
   useEffect(() => {
+    setLoad(true);
     getItems(idChecklist);
     getUnconformities(idChecklist);
-  }, [idChecklist]);
+    setLoad(false);
+  }, [items, unconformities]);
 
   return (
     <Layout navigation={navigation}>
@@ -51,14 +54,17 @@ const Items = ({ route, navigation }) => {
         title="Items"
         subtitle="Veja aqui os itens do checklist selecionado"
       />
-
-      
           <View style={styles.cards}>
             <CardData
               label="Não conformidades"
               data={`${unconformities}/${totalItems}`}
+              load={load}
             />
-            <CardData label="Aderência" data={`${calculateAdherence()}%`} />
+            <CardData 
+              label="Aderência" 
+              data={`${calculateAdherence()}%`}
+              load={load}
+            />
           </View>
           <Text style={styles.title}>Checklist</Text>
           <FlatList
