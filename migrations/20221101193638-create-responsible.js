@@ -9,10 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email:{
-        type: "VARCHAR(60)",
-        allowNull: false,
-      },
       nome: {
         type: "VARCHAR(30)",
         allowNull: false,
@@ -38,6 +34,10 @@ module.exports = {
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
+      },
+      email:{
+        type: "VARCHAR(60)",
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

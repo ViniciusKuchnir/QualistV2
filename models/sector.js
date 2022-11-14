@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Sector.hasMany(models.Responsible,{
-        as: 'IDRESPONSIBLE'
+        as: 'sector'
       });
     }
   }

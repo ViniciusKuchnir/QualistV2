@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Classification.hasMany(models.Item,{
-        as: 'IDITEM'
+        as: 'classification'
       });
       Classification.belongsTo(models.Company,{
         foreignKey: 'id',

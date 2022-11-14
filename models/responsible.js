@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Responsible.hasMany(models.Item,{
-        as: 'IDITEM'
+        as: 'responsible'
       });
       Responsible.belongsTo(models.Sector,{
         foreignKey: 'id',
-        as: 'IDSECTOR'
+        as: 'sector'
       });
       Responsible.belongsTo(models.Company,{
         foreignKey: 'id',
@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Responsible.init({
     nome: DataTypes.STRING,
-    idSector: DataTypes.INTEGER
+    SectorId: DataTypes.INTEGER,
+    email: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Responsible',

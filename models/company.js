@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Company.hasMany(models.Checklist,{
-        as: 'IDCHECKLIST'
+        as: 'companychecklists'
       });
       Company.hasMany(models.Responsible,{
         as: 'IDRESPONSIBLE'

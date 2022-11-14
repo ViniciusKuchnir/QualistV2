@@ -9,30 +9,34 @@ import Select from "../../components/Inputs/Select";
 import PrimaryButton from "../../components/Buttons/Primary";
 import SecondaryButton from "../../components/Buttons/Secondary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from 'moment-business-days';
 
 const Justification = ({ route, navigation }) => {
   let { idItem, confirmation } = route.params;
-  const [responsibles, setResponsibles] = useState([]);
-  const [classifications, setClassifications] = useState([]);
-  const [responsible, setResponsible] = useState(null);
-  const [errorResponsible, setErrorResponsible] = useState(null);
-  const [classification, setClassification] = useState(null);
-  const [errorClassification, setErrorClassification] = useState(null);
   const [justification, setJustification] = useState('');
   const [errorJustification, setErrorJustification] = useState(null);
+  const [deadline, setDeadline] = useState(null);
+
+  function calculateDeadline(deadline){
+    return moment().businessAdd(deadline - 1).format('YYYY-MM-DD');
+  }
+
+  function getDeadlineItem(){
+    api.get(`/deadline/${idItem}`)
+    .then((response) => setDeadline(response.data.deadline.classification.prazo))
+    .catch((err) => console.log(err));
+  }
 
   function sendNotification() {
-    if(responsible === null) {setErrorResponsible('Escolha uma opção')}
     if (justification === '') {setErrorJustification('Informe uma justificativa')}
-    if (classification === null) {setErrorClassification('Escolha uma opção ')}
-    if (responsible === null || justification === '' || classification === null){
+    if ( justification === ''){
       console.log('Um dos campos não está preenchido');
     }else{
       api.post('/sendEmail', {
         params:{
-          responsible: responsible,
-          classification: classification,
-          justification: justification
+          idItem: idItem,
+          justification: justification,
+          confirmation: confirmation,
         }
       })
       .then(() => {
@@ -50,82 +54,19 @@ const Justification = ({ route, navigation }) => {
         });
       })
     }
-    api.put('/setItem', {
-      idItem: idItem,
-      confirmation: confirmation,
-    })
   }
-
-  const getResponsibles = async () => {
-    try {
-      const user = await AsyncStorage.getItem("user");
-      const dataUser = await JSON.parse(user);
-      if (user !== null) {
-        api
-          .get(`/responsibles/${dataUser.id}`)
-          .then((response) => {
-            response.data.responsibles.map((item) => {
-              responsibles.push({ label: item.nome, value: item.id });
-            });
-          })
-          .catch((err) => console.log(err));
-      }
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  const getClassifications = async () => {
-    try {
-      const user = await AsyncStorage.getItem("user");
-      const dataUser = await JSON.parse(user);
-      if (user !== null) {
-        api
-          .get(`/classifications/${dataUser.id}`)
-          .then((response) => {
-            response.data.classifications.map((item) => {
-              classifications.push({ label: item.descricao, value: item.id });
-            });
-          })
-          .catch((err) => console.log(err));
-      }
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
 
   function cancelSubmit() {
     navigation.goBack();
   }
 
   useEffect(() => {
-    getResponsibles();
-    getClassifications();
+    getDeadlineItem();
   }, []);
 
   return (
     <Layout navigation={navigation}>
       <Title title="Justificativa" subtitle="Justifique a não conformidade" />
-
-      <Select
-        label="Responsável"
-        placeholder="Selecione um responsável"
-        items={responsibles}
-        setItems={setResponsibles}
-        value={responsible}
-        setValue={setResponsible}
-        error={responsible === null ? errorResponsible : null}  
-      />
-
-      <Select
-        label="Classificação"
-        placeholder="Selecione uma classificação"
-        items={classifications}
-        setItems={setClassifications}
-        value={classification}
-        setValue={setClassification} 
-        error={classification === null ? errorClassification : null}
-      />
 
       <TextField
         label="Justificativa"

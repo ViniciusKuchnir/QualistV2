@@ -46,7 +46,7 @@ const Items = ({ route, navigation }) => {
     getItems(idChecklist);
     getUnconformities(idChecklist);
     setLoad(false);
-  }, [items, unconformities]);
+  }, []);
 
   return (
     <Layout navigation={navigation}>

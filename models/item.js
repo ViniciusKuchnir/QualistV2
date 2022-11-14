@@ -11,16 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Item.belongsTo(models.Checklist,{
-        foreignKey: 'id',
-        as: 'IDCHECKLIST'
+        foreignKey: 'checklistId',
+        as: 'checklist'
       });
       Item.belongsTo(models.Classification,{
-        foreignKey: 'id',
-        as: 'IDCLASSIFICATION'
+        foreignKey: 'ClassificationId',
+        as: 'classification'
       });
       Item.belongsTo(models.Responsible,{
-        foreignKey: 'id',
-        as: 'IDRESPONSIBLE'
+        foreignKey: 'ResponsibleId',
+        as: 'responsible'
       });
 
     }
@@ -29,9 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     confirmado: DataTypes.BOOLEAN,
     descricao: DataTypes.STRING,
     prazo: DataTypes.DATEONLY,
-    idChecklist: DataTypes.INTEGER,
-    idClassification: DataTypes.INTEGER,
-    idResponsible: DataTypes.INTEGER
+    justificativa: DataTypes.STRING,
+    ChecklistId: DataTypes.INTEGER,
+    ClassificationId: DataTypes.INTEGER,
+    ResponsibleId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Item',

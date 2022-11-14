@@ -11,18 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Checklist.hasMany(models.Item,{
-        as: 'IDITEM'
+        as: 'checklist'
       });
       Checklist.belongsTo(models.Company,{
         foreignKey: 'id',
-        as: 'IDCOMPANY'
+        as: 'companychecklists'
       });
     }
   }
   Checklist.init({
     nome: DataTypes.STRING,
-    idCompany: DataTypes.INTEGER,
-    idModel: DataTypes.INTEGER
+    CompanyId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Checklist',
