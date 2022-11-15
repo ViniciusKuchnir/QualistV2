@@ -325,7 +325,7 @@ app.post("/sendEmail", async (req, res) => {
         Obs: Caso haja a necessidade,você possui 24 horas para realizar 
         a contestação desta não conformidade respondendo a este email
       </strong></p>
-      <h3>Obrigado por fazer parte do time Qualist, Sr(a). ${content.responsible.nome}</h3>
+      <h3>Obrigado por fazer parte do nosso time, sr(a). ${content.responsible.nome}</h3>
     `,
     text: "Olá Nodemailer! Esse email foi enviado usando o Nodemailer",
   })
