@@ -15,9 +15,6 @@ const Layout = ({children, navigation}) => {
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <MaterialIcons name="menu" size={28} color="#299740" />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <MaterialCommunityIcons name="bell" size={28} color="#299740" />
-          </TouchableOpacity>
         </View>
         : 
         null
