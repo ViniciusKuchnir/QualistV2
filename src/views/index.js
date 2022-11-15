@@ -15,5 +15,5 @@ export {
     Responsibles,
     Items,
     Justification,
-    Unconformities
+    Unconformities,
 }
