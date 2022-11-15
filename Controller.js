@@ -203,6 +203,7 @@ app.get("/responsibles/:idUser", async (req, res) => {
 app.get("/classifications/:idUser", async (req, res) => {
   let idUser = req.params.idUser;
   let classifications = await Classification.findAll({
+    order:[["prazo", "ASC"]],
     attributes: ["id", "descricao", "prazo"],
     where: {
       CompanyId: idUser,
