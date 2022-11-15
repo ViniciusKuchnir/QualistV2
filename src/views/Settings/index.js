@@ -1,11 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Layout from '../../components/Layout';
+import Title from '../../components/Title';
 
-const Settings = () => {
+const Settings = ({navigation}) => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <Layout navigation={navigation}>
+      <Title 
+        title='Configurações'
+        subtitle='Aqui você pode realizar algumas configurações'
+      />
+    </Layout>
   )
 }
 
