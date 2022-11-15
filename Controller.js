@@ -291,6 +291,8 @@ app.post("/sendEmail", async (req, res) => {
     }
   );
 
+  console.log(JSON.stringify(content, null, 2))
+
   transport
   .sendMail({
     from: "Qualist App <qualistapp@gmail.com>",
@@ -304,7 +306,7 @@ app.post("/sendEmail", async (req, res) => {
       notou que você possui uma 
       não conformidade e que de acordo com nossa equipe 
       se encaixa como uma não conformidade
-      de categoria <strong>${content.descricao}</strong> e de
+      de categoria <strong>${content.classification.descricao}</strong> e de
       acordo com eles o problema é: <strong>${justification}</strong>. 
       </p>
       <h2>Medidas a serem tomadas:</h2>
