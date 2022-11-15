@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { MaterialIcons } from '@expo/vector-icons';
 
-const CardUnconformities = ({description, responsible, sector, date}) => {
+const CardUnconformities = ({description, responsible, sector, date, checklistId, navigation}) => {
   
     function handleDate(date){
         if(date !== null){
@@ -12,9 +13,14 @@ const CardUnconformities = ({description, responsible, sector, date}) => {
     }
   
     return (
-    <TouchableOpacity style={styles.content}>
-        <Text style={styles.title}>{description}</Text>
-        <Text style={styles.description}><Text style={styles.strong}>{responsible}</Text> do setor <Text style={styles.strong}>{sector}</Text> tem até o dia <Text style={styles.strong}>{handleDate(date)}</Text> para resolver esta não conformidade.</Text>
+    <TouchableOpacity style={styles.content} activeOpacity={0.7} onPress={() => navigation.navigate('Items', {
+      idChecklist: checklistId
+    })} >
+          <View style={styles.head}>
+            <Text style={styles.title}>{description}</Text> 
+            <MaterialIcons name="arrow-forward" size={24} color="#F03637" /> 
+          </View>
+          <Text style={styles.description}><Text style={styles.strong}>{responsible}</Text> do setor <Text style={styles.strong}>{sector}</Text> tem até o dia <Text style={styles.strong}>{handleDate(date)}</Text> para resolver esta não conformidade.</Text>
     </TouchableOpacity>
   );
 };
@@ -30,6 +36,12 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 16,
   },
+  head:{
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   title:{
     fontSize: 14,
     fontWeight: "bold",
@@ -41,6 +53,6 @@ const styles = StyleSheet.create({
   strong:{
     fontWeight: "bold",
     color: "#F03637"
-  }
+  },
 
 });

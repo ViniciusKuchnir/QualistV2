@@ -100,7 +100,9 @@ app.get('/getUnconformities/:idCompany', async (req, res) => {
     },
   include: [
     {
+      
       model: Responsible,
+      required: true,
       as: 'responsible',
       attributes: {
         exclude: ['id','SectorId','CompanyId','createdAt', 'updatedAt'],

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'responsible'
       });
       Responsible.belongsTo(models.Sector,{
-        foreignKey: 'id',
+        foreignKey: 'SectorId',
         as: 'sector'
       });
       Responsible.belongsTo(models.Company,{

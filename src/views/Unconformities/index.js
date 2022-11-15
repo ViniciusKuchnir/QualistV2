@@ -58,7 +58,9 @@ const Unconformities = ({navigation}) => {
           description={item.descricao} 
           responsible={item.responsible.nome}
           sector={item.responsible.sector.nome}
-          date={item.prazo} 
+          date={item.prazo}
+          checklistId={item.checklist.id}
+          navigation={navigation} 
           />
         )}
         keyExtractor={item => item.id}
