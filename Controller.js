@@ -181,7 +181,14 @@ app.put("/setItem", async (req, res) => {
 app.get("/responsibles/:idUser", async (req, res) => {
   let idUser = req.params.idUser;
   let responsibles = await Responsible.findAll({
-    attributes: ["id", "nome"],
+    attributes: ["id", "nome", "email"],
+    include:[{
+        model: Sector,
+        as: 'sector',
+        attributes:{
+          exclude: ['createdAt', 'updatedAt']
+        }
+    }],
     where: {
       CompanyId: idUser,
     },
