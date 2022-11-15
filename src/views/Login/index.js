@@ -1,32 +1,45 @@
-import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, Keyboard } from 'react-native'
+import React, { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Keyboard } from "react-native";
 import api from "../../services/api";
-import Layout from '../../components/Layout';
-import TextField from '../../components/Inputs/TextField';
+import Layout from "../../components/Layout";
+import TextField from "../../components/Inputs/TextField";
 import PrimaryButton from "../../components/Buttons/Primary";
 import TertiaryButton from "../../components/Buttons/Tertiary";
 import Toast from "react-native-toast-message";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useForm, Controller } from "react-hook-form";
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import LottieView from "lottie-react-native";
 
 const schema = yup.object({
-  email: yup.string().email('Digite um email válido').required('Informe um email'),
-  password: yup.string().min(8, 'A senha deve conter pelo menos 8 caracteres').max(16,'A senha deve conter no máximo 16 caracteres').required('Informe uma senha')
-})
+  email: yup
+    .string()
+    .email("Digite um email válido")
+    .required("Informe um email"),
+  password: yup
+    .string()
+    .min(8, "A senha deve conter pelo menos 8 caracteres")
+    .max(16, "A senha deve conter no máximo 16 caracteres")
+    .required("Informe uma senha"),
+});
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+  const [load, setLoad] = useState(false);
 
-  const {control, handleSubmit, formState: { errors }} = useForm({
-    resolver: yupResolver(schema)
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
   //Assyn Storage
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('user', jsonValue);
+      await AsyncStorage.setItem("user", jsonValue);
     } catch (e) {
       Toast.show({
         type: "error",
@@ -34,100 +47,117 @@ const Login = ({navigation}) => {
         text2: "Algo de errado aconteceu! Por favor, tente novamente!",
       });
     }
-  }
+  };
 
   function loginUser(data) {
+    setLoad(true);
     Keyboard.dismiss();
     api
-    .get(`/user/${data.email}/${data.password}`)
-    .then(response => {
-      if(response.status === 200){
-        storeData(response.data.user);
-        navigation.navigate('Main')
-      }else{
+      .get(`/user/${data.email}/${data.password}`)
+      .then((response) => {
+        if (response.status === 200) {
+          storeData(response.data.user);
+          navigation.navigate("Main");
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Tente novamente!",
+            text2: "Algo de errado aconteceu! Por favor, tente novamente!",
+          });
+        }
+        setLoad(false);
+      })
+      .catch((err) => {
         Toast.show({
           type: "error",
-          text1: "Tente novamente!",
-          text2: "Algo de errado aconteceu! Por favor, tente novamente!",
+          text1: "Usuário não encontrado!",
+          text2: `Não conseguimos encontrar este usuário.`,
         });
-      }
-    })
-    .catch(err => {
-      Toast.show({
-        type: "error",
-        text1: "Usuário não encontrado!",
-        text2: `Não conseguimos encontrar este usuário.`,
+        setLoad(false);
       });
-    });
-
   }
 
   return (
     <Layout>
-      <SafeAreaView style={styles.content}>
-        <View>
-          <Text style={styles.title}>Bem-vindo de volta!</Text>
-          <Text style={styles.subtitle}>
-            Bem vindo de volta! Por favor entre com os seus dados.
-          </Text>
-        </View>
-        <View>
-        <Controller
-            control={control}
-            name="email"
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Email"
-                placeholder="Ex.: qualist@gmail.com"
-                keyboardType='email-address'
-                autoCapitalize='none'
-                value={value}
-                setValue={onChange}
-                error={errors.email && errors.email?.message}
-              />
-            )}
+      {load === true ? (
+        <View style={styles.loading}>
+            <LottieView
+            autoPlay
+            style={styles.iconLoad}
+            source={require("../../assets/animations/loading.json")}
           />
-
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Senha"
-                placeholder="Digite sua senha"
-                value={value}
-                setValue={onChange}
-                secureTextEntry={true}
-                error={errors.password && errors.password?.message}
-              />
-            )}
-          />
-          <PrimaryButton onPress={handleSubmit(loginUser)}>Entrar</PrimaryButton>
         </View>
+      ) : (
+        <SafeAreaView style={styles.content}>
+          <View>
+            <Text style={styles.title}>Bem-vindo de volta!</Text>
+            <Text style={styles.subtitle}>
+              Bem vindo de volta! Por favor entre com os seus dados.
+            </Text>
+          </View>
+          <View>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  label="Email"
+                  placeholder="Ex.: qualist@gmail.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  value={value}
+                  setValue={onChange}
+                  error={errors.email && errors.email?.message}
+                />
+              )}
+            />
 
-        <TertiaryButton
-          text="Não possui um cadastro?"
-          styleButton={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-          onPress={() => navigation.navigate("Register")}
-        >
-          Cadastrar-se
-        </TertiaryButton>
-      </SafeAreaView>
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  label="Senha"
+                  placeholder="Digite sua senha"
+                  value={value}
+                  setValue={onChange}
+                  secureTextEntry={true}
+                  error={errors.password && errors.password?.message}
+                />
+              )}
+            />
+            <PrimaryButton onPress={handleSubmit(loginUser)}>
+              Entrar
+            </PrimaryButton>
+          </View>
+          <TertiaryButton
+            text="Não possui um cadastro?"
+            styleButton={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+            onPress={() => navigation.navigate("Register")}
+          >
+            Cadastrar-se
+          </TertiaryButton>
+        </SafeAreaView>
+      )}
     </Layout>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
 
 const styles = StyleSheet.create({
   content: {
     width: "100%",
     height: "100%",
     justifyContent: "space-evenly",
+  },
+  loading:{
+    flex: 1,
+    width: "100%",
   },
   title: {
     fontSize: 28,
