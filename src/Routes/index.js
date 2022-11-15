@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Login, Register, Home, Checklists, Responsibles, Items, Justification, Unconformities, Classifications } from "../views";
+import { Login, Register, Home, Checklists, Responsibles, Items, Justification, Unconformities, Classifications, Success } from "../views";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawer from "../components/CustomDrawer";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -106,6 +106,11 @@ export default function Routes() {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Success"
+          component={Success}
           options={{ headerShown: false }}
         />
         <Stack.Screen

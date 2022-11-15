@@ -34,7 +34,7 @@ const Register = ({ navigation }) => {
     })
     .then(async (response) => {
       if (response.status === 200) {
-        navigation.navigate("Login");
+        navigation.navigate("Success");
       } else {
         Toast.show({
           type: "error",

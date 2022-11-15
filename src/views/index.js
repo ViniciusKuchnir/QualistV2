@@ -7,6 +7,7 @@ import Items from './Items';
 import Justification from './Justification';
 import Unconformities from './Unconformities';
 import Classifications from './Classifications';
+import Success from './Success';
 
 export {
     Login,
@@ -17,5 +18,6 @@ export {
     Items,
     Justification,
     Unconformities,
-    Classifications
+    Classifications,
+    Success
 }
