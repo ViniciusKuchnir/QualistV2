@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#299740",
     padding: 8,
     borderRadius: 8,
+    marginBottom: 16
   },
   contentLoad:{
     width: "47%",
