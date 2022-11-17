@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   label: {
+    fontSize: 12,
     color: "#FFF",
     fontWeight: "bold",
     letterSpacing: 1,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
   },
   dataText: {
     color: "#FFF",
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
     letterSpacing: 1,
   },

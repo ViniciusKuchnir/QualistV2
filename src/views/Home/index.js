@@ -52,9 +52,9 @@ const Home = ({ navigation }) => {
       <Text style={styles.overview}>Visão geral</Text>
       <View style={styles.datas}>
         <CardData label='Checklists' data={numberChecklists} load={false}/>
-        <CardData label='Inconformidades' data={numberInconformities} load={false}/>
-        <CardData label='Inconfomidades/Checklist (média)' data={numberInconformities/numberChecklists} load={false}/>
-        <CardData label='Inconformidades/mês (média)' data={(numberInconformities/12).toFixed(2)} load={false}/>
+        <CardData label='Não conformidades' data={numberInconformities} load={false}/>
+        <CardData label='Não confomidades/Checklist (média)' data={numberInconformities/numberChecklists} load={false}/>
+        <CardData label='Não conformidades/mês (média)' data={(numberInconformities/12).toFixed(2)} load={false}/>
       </View>
       
     </Layout> 
