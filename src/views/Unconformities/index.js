@@ -73,4 +73,8 @@ const Unconformities = ({navigation}) => {
 
 export default Unconformities
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container:{
+    paddingBottom: 150
+  }
+})

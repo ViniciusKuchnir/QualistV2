@@ -33,9 +33,19 @@ const CardUnconformities = ({
         <Text style={styles.title}>{description}</Text>
         <MaterialIcons name="arrow-forward" size={24} color="#F03637" />
       </View>
-      <Text style={styles.description}>
-        <Text style={styles.strong}>{responsible}</Text> do setor <Text style={styles.strong}>{sector}</Text> tem até o dia <Text style={styles.strong}>{handleDate(date)}</Text> para resolver esta não conformidade do tipo <Text style={styles.strong}>{classification}</Text>.
-      </Text>
+      {
+        date === null ? 
+        (
+        <Text style={styles.description}>
+          <Text style={styles.strong}>Este checklist ainda não foi avaliado.</Text>
+        </Text>
+        ) : 
+        (
+        <Text style={styles.description}>
+          <Text style={styles.strong}>{responsible}</Text> do setor <Text style={styles.strong}>{sector}</Text> tem até o dia <Text style={styles.strong}>{handleDate(date)}</Text> para resolver esta não conformidade do tipo <Text style={styles.strong}>{classification}</Text>.
+        </Text>
+        )
+      }
     </TouchableOpacity>
   );
 };
