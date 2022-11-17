@@ -96,7 +96,7 @@ app.get('/getUnconformities/:idCompany', async (req, res) => {
   let { idCompany } = req.params;
   const unconformities = await Item.findAll({
     attributes: {
-      exclude: ['checklistId','ClassificationId','ResponsibleId','ChecklistId','createdAt', 'updatedAt'],
+      exclude: ['checklistId','ResponsibleId','ChecklistId','createdAt', 'updatedAt'],
     },
   include: [
     {
@@ -123,6 +123,15 @@ app.get('/getUnconformities/:idCompany', async (req, res) => {
     },
     where:{CompanyId: idCompany} 
     },
+    {
+      model: Classification,
+      required: true,
+      as: 'classification',
+      attributes: {
+        exclude: ['CompanyId','createdAt', 'updatedAt'],
+      },
+      where:{CompanyId: idCompany} 
+    }
   ],
   where: {confirmado: false},
   });

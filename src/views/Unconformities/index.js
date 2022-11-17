@@ -60,6 +60,7 @@ const Unconformities = ({navigation}) => {
           sector={item.responsible.sector.nome}
           date={item.prazo}
           checklistId={item.checklist.id}
+          classification={item.classification.descricao}
           navigation={navigation} 
           />
         )}
