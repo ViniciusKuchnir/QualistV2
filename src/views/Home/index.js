@@ -10,9 +10,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Home = ({ navigation }) => {
   const [numberChecklists, setNumberChecklists] = useState(null);
   const [numberInconformities, setNumberInconformities] = useState(null);
-  const [inconformitiesChecklist, setInconformitiesChecklist] = useState(null);
-  const [inconformitiesMonth, setInconformitiesMonth] = useState(null);
-  
+  const [load, setLoad] = useState(false);
+
   const getData = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
@@ -20,7 +19,6 @@ const Home = ({ navigation }) => {
       if (user !== null) {
         getNumberChecklists(dataUser.id);
         getNumberInconformities(dataUser.id);
-        setInconformitiesChecklist(numberInconformities/numberChecklists);
       }
     } catch (e) {
       console.log(e.message);
@@ -37,7 +35,6 @@ const Home = ({ navigation }) => {
     api.get(`/getUnconformities/${idUser}`)
     .then((response) => {
       setNumberInconformities(response.data.unconformities.length);
-      setInconformitiesMonth((numberInconformities/12).toFixed(2))
     })
     .catch((e) => console.log(e))
   }
@@ -56,8 +53,8 @@ const Home = ({ navigation }) => {
       <View style={styles.datas}>
         <CardData label='Checklists' data={numberChecklists} load={false}/>
         <CardData label='Inconformidades' data={numberInconformities} load={false}/>
-        <CardData label='Inconfomidades/Checklist (média)' data={inconformitiesChecklist} load={false}/>
-        <CardData label='Inconformidades/mês (média)' data={inconformitiesMonth} load={false}/>
+        <CardData label='Inconfomidades/Checklist (média)' data={numberInconformities/numberChecklists} load={false}/>
+        <CardData label='Inconformidades/mês (média)' data={(numberInconformities/12).toFixed(2)} load={false}/>
       </View>
       
     </Layout> 
